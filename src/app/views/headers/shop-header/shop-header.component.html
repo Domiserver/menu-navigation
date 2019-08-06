@@ -1,0 +1,66 @@
+<mat-toolbar>
+    <button mat-mini-fab color="warn" [matMenuTriggerFor]="navMenu">
+        <mat-icon>dashboard</mat-icon>
+    </button>
+    <span class="example-icon"></span>
+    <mat-icon>{{ iconTitle }}</mat-icon>
+    <span class="example-icon"></span>
+        {{pageTitle}}
+    
+    <span class="example-spacer"></span>
+    <mat-icon [color]="userStatusColor">account_box</mat-icon>    
+    <span class="example-icon"></span>
+    <mat-icon matBadge="{{counter}}" matBadgePosition="before" matBadgeColor="accent">shopping_cart</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon [matMenuTriggerFor]="helpMenu">help</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon>settings</mat-icon>
+
+    <mat-menu #helpMenu="matMenu">
+        <div *ngIf="helpTitle=='Wordpresshostingpagehelp'">
+            Alguna pregunta sobre Wordpress Hosting?
+        </div>
+        <div *ngIf="helpTitle=='BancosPageHelp'">
+            Alguna pregunta sobre las Formas de Pago?
+            Si esta en Venezuela, seleccione uno de los 7 bancos segun su preferencia.
+        </div>
+        <div *ngIf="helpTitle=='ContactUsPageHelp'">
+            Alguna pregunta sobre como Contactarnos?
+        </div>        
+    </mat-menu>
+
+    <mat-menu #navMenu="matMenu">
+        <a href="{{ configData.linkedin }}" target="_blank">
+            <button mat-menu-item>
+              <mat-icon matTooltip="Perfil de Ronald, fundador de Domiserver" svgIcon="linkedin">LinkedIn</mat-icon>
+            </button>
+        </a>
+        <a href="{{ configData.stackoverflow }}" target="_blank">
+          <button mat-menu-item>
+            <mat-icon matTooltip="Domiserver en Stack Overflow" svgIcon="stackoverflow">Stack Overflow</mat-icon>
+          </button>
+      </a>
+      <a href="{{ configData.github }}" target="_blank">
+        <button mat-menu-item>
+          <mat-icon matTooltip="Domiserver en Github" svgIcon="github">Github</mat-icon>
+        </button>
+    </a>
+        <a href="{{ configData.emailid }}" target="_blank">
+          <button mat-menu-item>
+            <mat-icon matTooltip="Email de Domiserver" svgIcon="email">Email</mat-icon>
+          </button>
+        </a>
+        <a>
+          <button mat-menu-item routerLink="/create-product">
+            <mat-icon matTooltip="Administracion">settings</mat-icon>
+          </button>
+        </a>
+        <a>
+          <button mat-menu-item routerLink="/admin">
+            <mat-icon matTooltip="Admin Paginas">Administrar</mat-icon>
+          </button>
+        </a>
+    </mat-menu>
+
+</mat-toolbar>
+

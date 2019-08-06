@@ -4,6 +4,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
 import { BackendService } from '../../../services/backend.service';
+import { moveIn, fallIn } from 'src/app/utilities/router.animation';
 
 export interface UserData {
   id: string;
@@ -31,7 +32,9 @@ const NAMES: string[] = [
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  styleUrls: ['./create-product.component.css'],
+  animations: [moveIn(), fallIn()],
+  host: { '[@moveIn]': '' }
 })
 export class CreateProductComponent implements OnInit {
 

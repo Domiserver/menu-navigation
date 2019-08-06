@@ -1,0 +1,23 @@
+<app-shop-header pageTitle="Admin" iconTitle="icon" helpTitle='Admin'> </app-shop-header>
+<mat-card [@fallIn]='state'>
+
+<mat-card>
+    <mat-card-content>
+        <div *ngIf="(toggleField=='searchMode') else (toggleField=='addMode')? showAddMode: ((toggleField=='editMode')? showEditMode : showResultsMode)">
+            <!-- Search Product Page starts -->
+        </div>
+    </mat-card-content>  
+</mat-card>
+
+<ng-template #showAddMode>
+    <!-- Add Product Page starts  -->
+</ng-template>
+
+<ng-template #showEditMode>
+    <!-- Edit Product Page starts  -->
+</ng-template>
+
+<ng-template #showResultsMode>
+    <!-- Results Product Page starts  -->
+</ng-template>
+

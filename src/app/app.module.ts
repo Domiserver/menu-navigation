@@ -32,6 +32,8 @@ import { WordpressHostingComponent } from './views/shop/wordpress-hosting/wordpr
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AuthComponent } from './views/auth/auth.component';
 import { ShopFooterComponent } from './views/footers/shop-footer/shop-footer.component';
+import { AdminProductComponent } from './views/products/admin-product/admin-product.component';
+import { ShopProductComponent } from './views/products/shop-product/shop-product.component';
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { ShopFooterComponent } from './views/footers/shop-footer/shop-footer.com
     ShopOrderComponent, 
     AuthComponent,
     ShopFooterComponent,
-    ShopHeaderComponent
+    ShopHeaderComponent,
+    AdminProductComponent,
+    ShopProductComponent
   ],
   imports: [
     AppRoutingModule,

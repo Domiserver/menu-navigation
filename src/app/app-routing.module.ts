@@ -8,6 +8,8 @@ import { ContactusComponent } from './views/shop/contactus/contactus.component';
 import { CreateProductComponent } from './features/products/create-product/create-product.component';
 import { ShopHomeComponent } from './views/homes/shop-home/shop-home.component';
 import { AuthComponent } from './views/auth/auth.component';
+import { AboutusComponent } from './views/shop/aboutus/aboutus.component';
+import { AdminProductComponent } from './views/products/admin-product/admin-product.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/portada', pathMatch: 'full'},
@@ -15,8 +17,10 @@ const routes: Routes = [
   {path: 'wordpress-hosting', component: WordpressHostingComponent},
   {path: 'bancos', component: VenebanksComponent},
   {path: 'contactus', component: ContactusComponent},
+  {path: 'domiserver', component: AboutusComponent},
+  {path: 'admin', redirectTo: '/domiserver', pathMatch: 'full'},
   {path: 'adminProduct', component: CreateProductComponent},
-  {path: 'admin', component: AdminPagesComponent},
+
   {path: 'login', component: AuthComponent},
   {path: '**', redirectTo: '/login', pathMatch: 'full'},];
 

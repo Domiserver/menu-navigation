@@ -1,14 +1,22 @@
-
+<app-shop-header pageTitle="Productos" iconTitle="equalizer"></app-shop-header>
+<mat-card [@fallIn]='state'>
 <mat-card>
   <mat-card-content>
     <div
       *ngIf="(toggleField=='searchMode') else (toggleField=='addMode')? showAddMode : ((toggleField=='editMode')? showEditMode : showResMode)">
       <!-- searchmode -->
+
+      <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
+      <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error>
+      <h2>Buscador de Servicios</h2>
       <form #searchFormData="ngForm" class="example-form">
+        
+        <span class="small-spacer"></span>
         <mat-card-actions align="start">
           <button type="button" (click)="toggle('resMode');getFilterData(searchFormData.value);" mat-raised-button
             [disabled]="!searchFormData.valid" color="primary">Search</button>
-          <span class="med-spacer"></span>
+          <span class="small-spacer"></span>
+
           <span matTooltip="Add New">
             <mat-icon color="primary" (click)="toggle('addMode');">add</mat-icon>
           </span>
@@ -57,15 +65,12 @@
     </mat-error>
 
     <div *ngIf="!savedChanges">
-      <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
-
-      <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error>
-
+        <h2>Agregar un producto</h2>
       <mat-card-actions align="start">
         <button type="submit" mat-raised-button [disabled]="!addDataForm.valid" color="primary">Add</button>
         <button type="reset" (click)="this.addDataForm.reset();" mat-raised-button [disabled]="!addDataForm.valid"
           color="primary">Clear</button>
-        <span class="med-spacer"></span>
+        <span class="small-spacer"></span>
 
         <span matTooltip="Search">
           <mat-icon color="primary" (click)="toggle('searchMode')">search</mat-icon>
@@ -138,9 +143,9 @@
 
 <!-- Edit form template starts here-->
 <ng-template #showEditMode>
+    <h2>Editar un producto</h2>
 
   <form #editDataForm="ngForm" (ngSubmit)="setData(editDataForm.value);" novalidate>
-
     <mat-error *ngIf="savedChanges">
       Data is saved.
       <label class="small-spacer"></label>
@@ -149,7 +154,6 @@
 
     <div *ngIf="!savedChanges">
       <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
-
       <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error>
 
       <mat-card-actions align="start">
@@ -158,6 +162,7 @@
           color="primary">Clear</button>
         <span class="med-spacer"></span>
 
+        <span class="small-spacer"></span>
         <span matTooltip="Search">
           <mat-icon color="primary" (click)="toggle('searchMode')">search</mat-icon>
         </span>
@@ -219,13 +224,13 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="5% Discount" name="discount5" id="discount5" [ngModel]="discount5" required
+        <input matInput placeholder="5% Discount" name="discount5" id="discount5" [ngModel]="discount5"
           pattern="[0-9]+">
         <mat-hint align="end">5% por 6 meses</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="10% Discount" name="discount10" id="discount10" [ngModel]="disocunt10" required
+        <input matInput placeholder="10% Discount" name="discount10" id="discount10" [ngModel]="disocunt10"
           pattern="[0-9]+">
         <mat-hint align="end">10% por 12 meses</mat-hint>
       </mat-form-field>
@@ -235,16 +240,28 @@
 
 <!-- Response form template starts here-->
 <ng-template #showResMode>
+    <!-- <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
+    <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error> -->
+
+    <span class="med-spacer"></span>
+    <h2>Resultado de Busqueda</h2>
+    <span class="small-spacer"></span>
+    <span matTooltip="Search">
+      <mat-icon color="primary" (click)="toggle('searchMode')">search</mat-icon>
+    </span>
+    <span class="small-spacer"></span>
+    <span matTooltip="Show Recent Results">
+      <mat-icon color="primary" (click)="toggle('resMode');getData();">cached</mat-icon>
+    </span>
     <div class="example-header">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Recent Results">
         </mat-form-field>
     </div>
-  <!--Angular Material Table-->
 
+  <!--Angular Material Table-->
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
-
             <!-- ID Column -->
             <ng-container matColumnDef="plan">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PLAN </th>
@@ -283,3 +300,4 @@
     </div>
 
 </ng-template>
+<app-shop-footer></app-shop-footer>

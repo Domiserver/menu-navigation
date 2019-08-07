@@ -2,19 +2,13 @@
 <mat-card [@fallIn]='state'>
 <mat-card>
   <mat-card-content>
-    <div
-      *ngIf="(toggleField=='searchMode') else (toggleField=='addMode')? showAddMode : ((toggleField=='editMode')? showEditMode : showResMode)">
-      <!-- searchmode -->
-
-      <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
-      <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error>
+    <div *ngIf="(toggleField=='searchMode') else (toggleField=='addMode')? showAddMode : ((toggleField=='editMode')? showEditMode : showResMode)">
+      <!-- search page starts here -->
       <h2>Buscador de Servicios</h2>
-      <form #searchFormData="ngForm" class="example-form">
-        
+      <form #searchFormData="ngForm" class="example-form">        
         <span class="small-spacer"></span>
         <mat-card-actions align="start">
-          <button type="button" (click)="toggle('resMode');getFilterData(searchFormData.value);" mat-raised-button
-            [disabled]="!searchFormData.valid" color="primary">Search</button>
+          <button type="button" (click)="toggle('resMode');getFilterData(searchFormData.value);" mat-raised-button [disabled]="!searchFormData.valid" color="primary">Search</button>
           <span class="small-spacer"></span>
 
           <span matTooltip="Add New">
@@ -53,7 +47,7 @@
   </mat-card-content>
 </mat-card>
 
-<!-- add form template starts here-->
+<!-- //// add form template starts here  //// --> 
 <ng-template #showAddMode>
 
   <form #addDataForm="ngForm" (ngSubmit)="setData(addDataForm.value);" novalidate>
@@ -141,11 +135,11 @@
   </form>
 </ng-template>
 
-<!-- Edit form template starts here-->
+<!-- ////  Edit form template starts here //// -->
 <ng-template #showEditMode>
     <h2>Editar un producto</h2>
 
-  <form #editDataForm="ngForm" (ngSubmit)="setData(editDataForm.value);" novalidate>
+  <form #editDataForm="ngForm" (ngSubmit)="updateData(editDataForm.value);" novalidate>
     <mat-error *ngIf="savedChanges">
       Data is saved.
       <label class="small-spacer"></label>
@@ -261,40 +255,65 @@
 
   <!--Angular Material Table-->
     <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
-            <!-- ID Column -->
-            <ng-container matColumnDef="plan">
+        <mat-table [dataSource]="dataSource" matSort>
+          <!-- ID Column -->
+          <ng-container matColumnDef="plan">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PLAN </th>
             <td mat-cell *matCellDef="let row"> {{row.plan}} </td>
-            </ng-container>
+          </ng-container>
 
-            <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO </th>
-                <td mat-cell *matCellDef="let row"> {{row.price}} </td>
-                </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO </th>
+            <td mat-cell *matCellDef="let row"> {{row.price}} </td>
+          </ng-container>
             
             <!-- Progress Column -->
-            <ng-container matColumnDef="progress">
+          <ng-container matColumnDef="progress">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PROGRESO </th>
             <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-            </ng-container>
+          </ng-container>
 
             <!-- Name Column -->
-            <ng-container matColumnDef="name">
+          <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
             <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-            </ng-container>
+          </ng-container>
 
             <!-- Color Column -->
-            <ng-container matColumnDef="color">
+          <ng-container matColumnDef="color">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
             <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-            </ng-container>
+          </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-            </tr>
-        </table>
+          <ng-container matColumnDef="_id">
+            <mat-header-cell *matHeaderCellDef> ACCION </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button mat-icon-button matTooltip="Show Picture" *ngIf="row.path" (click)="getPic(row.path);this.showHostSelfie=true;">
+                <mat-icon color="primary">photo_camera</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Remove Picture" *ngIf="row.path" (click)="deleteProductPic(row._id);this.showHostSelfie=false;">
+                <mat-icon color="primary">camera_roll</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Take Picture" (click)="this.myDocId=row._id;this.takeHostSelfie=true;" class="label-error"
+                *ngIf="!row.path" class="label-error">
+                <mat-icon>camera_roll</mat-icon>
+              </button>
+              <span matTooltip="Edit">
+                <button mat-icon-button (click)="getDoc(row._id)">
+                  <mat-icon color="primary">edit</mat-icon>
+                </button>
+              </span>
+              <span matTooltip="Delete">
+                <button mat-icon-button (click)="deleteDoc(row._id)">
+                  <mat-icon color="primary">delete</mat-icon>
+                </button>
+              </span>
+              </mat-cell>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </mat-table>
 
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>

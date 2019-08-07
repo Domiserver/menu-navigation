@@ -61,6 +61,84 @@ export class BackendService {
             }
         )
     }
+
+    
+    getFilterProducts(collTypem, filters) {
+        let fakeresponse = [
+            {'name': "Wordpress Hosting",
+            'plan': "Limon",
+            'price': "Bs. 49.000 + IVA",
+            },
+            {'name': "Wordpress Hosting",
+            'plan': "Mango",
+            'price': "Bs. 123.000 + IVA",
+            },
+            {'name': "Dominios .com .net",
+            'plan': "Registro Inicial",
+            'price': "Bs. 99.000 + IVA",
+            },
+            {'name': "Dominios .com .net",
+            'plan': "Renovacion",
+            'price': "Bs. 99.000 + IVA",
+            },
+        ];
+        return Observable.create(
+            observer => {
+                setTimeout(() => {
+                    observer.next(fakeresponse)
+                },2000)
+            }
+        )
+    }
+
+    setProducts(collType, filters) {
+        let fakeresponse = "true";
+        return Observable.create(
+            observer => {
+                setTimeout(() => {
+                    observer.next(fakeresponse)
+                }, 2000)
+            }
+        )
+    }
+
+    updateProducts(collType, filters) {
+        let fakeresponse = "true";
+        return Observable.create(
+            observer => {
+                setTimeout(() => {
+                    observer.next(fakeresponse)
+                }, 2000)
+            }
+        )
+    }
+
+    getOneProductDoc(collType, docId) {
+        let fakeresponse = [
+            {'name': "Wordpress Hosting",
+            'plan': "Limon",
+            'price': "Bs. 49.000 + IVA",
+            },
+        ];
+        return Observable.create(
+            observer => {
+                setTimeout(() => {
+                    observer.next(fakeresponse)
+                },2000)
+            }
+        )
+    }
+
+    delOneProductDoc(collType, docId) {
+        let fakeresponse = "true";
+        return Observable.create(
+            observer => {
+                setTimeout(() => {
+                    observer.next(fakeresponse)
+                }, 2000)
+            }
+        )
+    }
     ////////////  Angular NGRX START //////////////////////
         // sign-up page - create a new user
         // createUser(formData) {

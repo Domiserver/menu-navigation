@@ -1,6 +1,5 @@
 <app-shop-header pageTitle="Productos" iconTitle="equalizer"></app-shop-header>
 <mat-card [@fallIn]='state'>
-<mat-card>
   <mat-card-content>
     <div *ngIf="(toggleField=='searchMode') else (toggleField=='addMode')? showAddMode : ((toggleField=='editMode')? showEditMode : showResMode)">
       <!-- search page starts here -->
@@ -20,12 +19,12 @@
           </span>
         </mat-card-actions>
         <mat-form-field class="example-form">
-          <input matInput [disabled]="name.value > ''" type="text" placeholder="Category" id="category" name="category"
+          <input matInput  type="text" placeholder="Category" id="category" name="category"
             #category="ngModel" ngModel minlength="3" maxlength="50">
         </mat-form-field>
         <br>
         <mat-form-field class="example-form">
-          <input matInput [disabled]="category.value > ''" type="text" placeholder="Product Name" id="name" name="name"
+          <input matInput type="text" placeholder="Product Name" id="name" name="name"
             #name="ngModel" ngModel minlength="3" maxlength="50">
         </mat-form-field>
         <br>
@@ -51,7 +50,6 @@
 <ng-template #showAddMode>
 
   <form #addDataForm="ngForm" (ngSubmit)="setData(addDataForm.value);" novalidate>
-
     <mat-error *ngIf="savedChanges">
       Data is saved.
       <label class="small-spacer"></label>
@@ -59,11 +57,10 @@
     </mat-error>
 
     <div *ngIf="!savedChanges">
-        <h2>Agregar un producto</h2>
+      <h2>Agregar un producto</h2>
       <mat-card-actions align="start">
         <button type="submit" mat-raised-button [disabled]="!addDataForm.valid" color="primary">Add</button>
-        <button type="reset" (click)="this.addDataForm.reset();" mat-raised-button [disabled]="!addDataForm.valid"
-          color="primary">Clear</button>
+        <button type="reset" (click)="this.addDataForm.reset();" mat-raised-button [disabled]="!addDataForm.valid" color="primary">Clear</button>
         <span class="small-spacer"></span>
 
         <span matTooltip="Search">
@@ -87,13 +84,12 @@
       <br>
 
       <mat-form-field>
-        <textarea matInput placeholder="*IMP*: Search use Tags Text" name="tags" id="tags" ngModel required
-          minlength="1"></textarea>
+        <textarea matInput placeholder="*IMP*: Search use Tags Text" name="tags" id="tags" ngModel ></textarea>
         <mat-hint align="end">ejemplo: Hosting, Plans, Wordpress</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Product Name" name="name" id="name" ngModel required minlength="1">
+        <input matInput placeholder="Product Name" name="name" id="name" ngModel minlength="1">
         <mat-hint align="end">ejemplo: Plan Mango</mat-hint>
       </mat-form-field>
 
@@ -123,12 +119,12 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Discount" name="discount" id="discount" ngModel required pattern="[0-9]+">
+        <input matInput placeholder="Discount" name="discount" id="discount" ngModel pattern="[0-9]+">
         <mat-hint align="end">5% por 6 meses</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Discount" name="discount" id="discount" ngModel required pattern="[0-9]+">
+        <input matInput placeholder="Discount" name="discount" id="discount" ngModel pattern="[0-9]+">
         <mat-hint align="end">10% por 12 meses</mat-hint>
       </mat-form-field>
     </div>
@@ -137,13 +133,13 @@
 
 <!-- ////  Edit form template starts here //// -->
 <ng-template #showEditMode>
-    <h2>Editar un producto</h2>
-
+  <h2>Editar un producto</h2>
   <form #editDataForm="ngForm" (ngSubmit)="updateData(editDataForm.value);" novalidate>
+    <input type="hidden" name="_id" id="_id" [ngModel]="myDocData._id" required>
     <mat-error *ngIf="savedChanges">
       Data is saved.
       <label class="small-spacer"></label>
-      <mat-icon (click)="this.addDataForm.reset();savedChanges=false;toggle('searchMode');">clear</mat-icon>
+      <mat-icon (click)="this.editDataForm.reset();savedChanges=false;toggle('searchMode');">clear</mat-icon>
     </mat-error>
 
     <div *ngIf="!savedChanges">
@@ -151,12 +147,8 @@
       <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error>
 
       <mat-card-actions align="start">
-        <button type="submit" mat-raised-button [disabled]="!addDataForm.valid" color="primary">Add</button>
-        <button type="reset" (click)="this.addDataForm.reset();" mat-raised-button [disabled]="!addDataForm.valid"
-          color="primary">Clear</button>
+        <button type="submit" mat-raised-button [disabled]="!this.editDataForm.valid || this.editDataForm.pristine" color="primary">Update</button>
         <span class="med-spacer"></span>
-
-        <span class="small-spacer"></span>
         <span matTooltip="Search">
           <mat-icon color="primary" (click)="toggle('searchMode')">search</mat-icon>
         </span>
@@ -168,63 +160,60 @@
 
       <!--form fields-->
       <mat-form-field>
-        <input matInput placeholder="Category" name="category" id="category" [ngModel]="category" required
-          minlength="1">
+        <input matInput placeholder="Category" name="category" id="category" [ngModel]="myDocData.category" required minlength="1">
         <mat-hint align="end">ejemplo: Hosting, Dominios</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Sub Category" name="scategory" id="scategory" [ngModel]="scategory" required
+        <input matInput placeholder="Sub Category" name="scategory" id="scategory" [ngModel]="myDocData.scategory" required
           minlength="1">
         <mat-hint align="end">ejemplo: Wordpress Hosting, SSL</mat-hint>
       </mat-form-field>
       <br>
 
       <mat-form-field>
-        <textarea matInput placeholder="*IMP*: Search use Tags Text" name="tags" id="tags" [ngModel]="tags" required
-          minlength="1"></textarea>
+        <textarea matInput placeholder="Search use Tags Text" name="tags" id="tags" [ngModel]="myDocData.tags" ></textarea>
         <mat-hint align="end">ejemplo: Hosting, Plans, Wordpress</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Product Name" name="name" id="name" [ngModel]="name" required minlength="1">
+        <input matInput placeholder="Product Name" name="name" id="name" [ngModel]="myDocData.name" required minlength="1">
         <mat-hint align="end">ejemplo: Plan Mango</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Short Name" name="sname" id="sname" [ngModel]="sname">
+        <input matInput placeholder="Short Name" name="sname" id="sname" [ngModel]="myDocData.sname">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Long Name" name="lname" id="lname" [ngModel]="lname">
+        <input matInput placeholder="Long Name" name="lname" id="lname" [ngModel]="myDocData.lname">
       </mat-form-field>
       <br>
 
       <mat-form-field>
-        <textarea matInput placeholder="Description" name="descr" id="descr" cols="30" rows="10"
-          [ngModel]="descr"></textarea>
+        <textarea matInput placeholder="Description" name="descr" id="descr" [ngModel]="myDocData.descr"></textarea>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Emails" name="email" id="email" [ngModel]="email">
+        <input matInput placeholder="Emails" name="email" id="email" [ngModel]="myDocData.email">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Softaculous" name="softaculous" id="softaculous" [ngModel]="softaculous">
+        <input matInput placeholder="Softaculous" name="softaculous" id="softaculous" [ngModel]="myDocData.softaculous">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Price" name="price" id="price" [ngModel]="price" required pattern="[0-9]+">
+        <input matInput placeholder="Price" name="price" id="price" [ngModel]="myDocData.price" required pattern="[0-9]+">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="5% Discount" name="discount5" id="discount5" [ngModel]="discount5"
+        <input matInput placeholder="5% Discount" name="discount5" id="discount5" [ngModel]="myDocData.discount5"
           pattern="[0-9]+">
         <mat-hint align="end">5% por 6 meses</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="10% Discount" name="discount10" id="discount10" [ngModel]="disocunt10"
+        <input matInput placeholder="10% Discount" name="discount10" id="discount10" [ngModel]="myDocData.discount10"
           pattern="[0-9]+">
         <mat-hint align="end">10% por 12 meses</mat-hint>
       </mat-form-field>
@@ -234,8 +223,8 @@
 
 <!-- Response form template starts here-->
 <ng-template #showResMode>
-    <!-- <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
-    <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error> -->
+    <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
+    <mat-error *ngIf="error">Error: {{ errorMessage }}</mat-error>
 
     <span class="med-spacer"></span>
     <h2>Resultado de Busqueda</h2>
@@ -256,14 +245,27 @@
   <!--Angular Material Table-->
     <div class="mat-elevation-z8">
         <mat-table [dataSource]="dataSource" matSort>
-          <!-- ID Column -->
-          <ng-container matColumnDef="plan">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> PLAN </th>
-            <td mat-cell *matCellDef="let row"> {{row.plan}} </td>
+          <!-- ID Column
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          </ng-container> -->
+
+          <!-- CATEGORY Column -->
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> CATEGORY </th>
+            <td mat-cell *matCellDef="let row"> {{row.category}} </td>
           </ng-container>
 
+            <!-- SUBCATEGORY Column -->
+          <ng-container matColumnDef="scategory">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> SUBCATEGORY </th>
+            <td mat-cell *matCellDef="let row"> {{row.scategory}} </td>
+          </ng-container>
+            
+            <!-- PRICE Column -->
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE </th>
             <td mat-cell *matCellDef="let row"> {{row.price}} </td>
           </ng-container>
             

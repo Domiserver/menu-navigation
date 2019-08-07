@@ -36,23 +36,37 @@ export class BackendService {
 
     getProducts(collType) {
         let fakeresponse = [
-            {'name': "Wordpress Hosting",
-            'plan': "Limon",
-            'price': "Bs. 49.000 + IVA",
+            {
+            '_id': "1",
+            'category': "Hosting",
+            'scategory': "Wordpress",
+            'name': "Limon",
+            'price': "49000",
             },
-            {'name': "Wordpress Hosting",
-            'plan': "Mango",
-            'price': "Bs. 123.000 + IVA",
+            {
+            '_id': "2",
+            'category': "Hosting",
+            'scategory': "Wordpress",
+            'name': "Mango",
+            'price': "123000",
             },
-            {'name': "Dominios .com .net",
-            'plan': "Registro Inicial",
-            'price': "Bs. 99.000 + IVA",
+            {
+            '_id': "3",
+            'category': "Domains",
+            'scategory': "Dominios .com",
+            'name': "Registro Inicial",
+            'price': "99000",
             },
-            {'name': "Dominios .com .net",
-            'plan': "Renovacion",
-            'price': "Bs. 99.000 + IVA",
+            {
+            '_id': "4",    
+            'category': "Hosting",
+            'scategory': "Dominios .net",
+            'name': "Renovacion",
+            'price': "99000",
             },
         ];
+
+  displayedColumns: [] = ['category', 'scategory', 'name', 'price', '_id'];
         return Observable.create(
             observer => {
                 setTimeout(() => {
@@ -65,22 +79,34 @@ export class BackendService {
     
     getFilterProducts(collTypem, filters) {
         let fakeresponse = [
-            {'name': "Wordpress Hosting",
-            'plan': "Limon",
-            'price': "Bs. 49.000 + IVA",
-            },
-            {'name': "Wordpress Hosting",
-            'plan': "Mango",
-            'price': "Bs. 123.000 + IVA",
-            },
-            {'name': "Dominios .com .net",
-            'plan': "Registro Inicial",
-            'price': "Bs. 99.000 + IVA",
-            },
-            {'name': "Dominios .com .net",
-            'plan': "Renovacion",
-            'price': "Bs. 99.000 + IVA",
-            },
+            {
+                '_id': "1",
+                'category': "Hosting",
+                'scategory': "Wordpress",
+                'name': "Limon",
+                'price': "49000",
+                },
+                {
+                '_id': "2",
+                'category': "Hosting",
+                'scategory': "Wordpress",
+                'name': "Mango",
+                'price': "123000",
+                },
+                {
+                '_id': "3",
+                'category': "Domains",
+                'scategory': "Dominios .com",
+                'name': "Registro Inicial",
+                'price': "99000",
+                },
+                {
+                '_id': "4",    
+                'category': "Hosting",
+                'scategory': "Dominios .net",
+                'name': "Renovacion",
+                'price': "99000",
+                },
         ];
         return Observable.create(
             observer => {
@@ -113,13 +139,19 @@ export class BackendService {
         )
     }
 
+    // updateProduct(coll,formData){
+    //     return this.updateDoc(this.getCollectionURL(coll),formData._id,formData);
+    // }
+
     getOneProductDoc(collType, docId) {
-        let fakeresponse = [
-            {'name': "Wordpress Hosting",
-            'plan': "Limon",
-            'price': "Bs. 49.000 + IVA",
-            },
-        ];
+        let fakeresponse = 
+            {
+            '_id': "3",
+            'category': "Domains",
+            'scategory': "Dominios .com",
+            'name': "Registro Inicial",
+            'price': "99000",
+            };
         return Observable.create(
             observer => {
                 setTimeout(() => {

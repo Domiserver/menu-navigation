@@ -8,10 +8,9 @@ import { moveIn, fallIn } from 'src/app/utilities/router.animation';
 
 export interface UserData {
   id: string;
+  category: string;
+  scategory: string;
   name: string;
-  progress: string;
-  color: string;
-  plan: string;
   price: string;
 }
 
@@ -39,6 +38,7 @@ const NAMES: string[] = [
 export class CreateProductComponent implements OnInit, OnDestroy {
 
   toggleField: string;
+  dataSource: MatTableDataSource<any>;
   members: any[];
   myDocData: any;
 
@@ -47,22 +47,14 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   errorMessage: String = "";
   dataLoading: boolean = false;
   private querySubscription;
-
-  displayedColumns: string[] = ['name', 'plan', 'price', '_id'];
-  dataSource: MatTableDataSource<UserData>;
-
+  
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  displayedColumns = ['category', 'scategory', 'name', 'price', '_id'];
 
   constructor(
     private _backendService: BackendService
-  ) {     
-    // Create 100 users
-   // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.members);
-   }
+  ) { }
 
   ngOnInit() {
     this.toggleField = "searchMode";
@@ -133,7 +125,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   updateData(formData) {
     this.dataLoading = true;
-    this.querySubscription = this._backendService.setProducts('product', formData)
+    this.querySubscription = this._backendService.updateProducts('product', formData)
       .subscribe(members => {
          if(members) {
            this.savedChanges = true;
@@ -147,6 +139,22 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         },
         () => {this.error = false; this.dataLoading = false;});
   }
+//   updateData(formData) {
+//     formData.tags = formData.tags.split(',');
+//     if (confirm("Are you sure want to update this record ?")) {
+//         this.dataLoading = true;
+//         this._backendService.updateProduct('product', formData).then((res) => {
+//             this.error = false;
+//             this.errorMessage = "";
+//             this.dataLoading = false;
+//             this.savedChanges = true;
+//         }).catch(error => {
+//             this.error = true;
+//             this.errorMessage = error.message;
+//             this.dataLoading = false;
+//         });
+//     }
+// }
 
   getDoc(docId) {
     this.dataLoading = true;

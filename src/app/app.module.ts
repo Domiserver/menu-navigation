@@ -34,6 +34,8 @@ import { AuthComponent } from './views/auth/auth.component';
 import { ShopFooterComponent } from './views/footers/shop-footer/shop-footer.component';
 import { AdminProductComponent } from './views/products/admin-product/admin-product.component';
 import { ShopProductComponent } from './views/products/shop-product/shop-product.component';
+import { StoreModule } from '@ngrx/store';
+
 
 
 @NgModule({
@@ -72,7 +74,6 @@ import { ShopProductComponent } from './views/products/shop-product/shop-product
     HttpClientModule,    
     ReactiveFormsModule,
     StoreRouterConnectingModule.forRoot(),
-
   ],
   providers: [
     AuthService,
